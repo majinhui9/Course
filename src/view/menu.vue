@@ -2,30 +2,12 @@
 <div class="layout">
         <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
             <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" accordion>
-                <Submenu name="1">
+                <Submenu :name="i+1" v-for="(item, i) in menuList" :key="item.key">
                     <template slot="title">
                         <Icon type="ios-navigate"></Icon>
-                        Item 1
+                        {{item.name}}
                     </template>
-                    <MenuItem name="1-1">Option 1</MenuItem>
-                    <MenuItem name="1-2">Option 2</MenuItem>
-                    <MenuItem name="1-3">Option 3</MenuItem>
-                </Submenu>
-                <Submenu name="2">
-                    <template slot="title">
-                        <Icon type="ios-keypad"></Icon>
-                        Item 2
-                    </template>
-                    <MenuItem name="2-1">Option 1</MenuItem>
-                    <MenuItem name="2-2">Option 2</MenuItem>
-                </Submenu>
-                <Submenu name="3">
-                    <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
-                        Item 3
-                    </template>
-                    <MenuItem name="3-1">Option 1</MenuItem>
-                    <MenuItem name="3-2">Option 2</MenuItem>
+                    <MenuItem :name="(i+1)+'-'+(index+1)" v-for="(label, index) in item.children" :key="label.key">{{label.name}}</MenuItem>
                 </Submenu>
             </Menu>
         </Sider>
@@ -45,6 +27,14 @@ export default {
       collapsed: false,
       activeMenu: {},
       menuList: [
+          { name: 'Vue', key: 'vue', children: [
+              { name: '基础', key: '' },
+              { name: '组件', key: '' },
+              { name: '生命周期', key: '' },
+              { name: '路由', key: 'router' },
+              { name: 'vuex', key: 'vuex' },
+              { name: 'webPack', key: 'webPack' }
+          ] }
       ]
     }
   },
