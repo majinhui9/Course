@@ -8,6 +8,7 @@ export default new Router({
   mode: 'history',
   routes: [
     { path: '/', name: 'HelloWorld', component: HelloWorld },
+    { path: '/Course', name: 'Course', component: HelloWorld },
     { path: '/basics', name: 'Basics', component: _ => { require(['@/view/doc/Basics.md'], _) } },
     { path: '/component', name: 'Component', component: _ => { require(['@/view/doc/Component.md'], _) } },
     { path: '/lifecycle', name: 'Lifecycle', component: _ => { require(['@/view/doc/Lifecycle.md'], _) } },
@@ -16,5 +17,7 @@ export default new Router({
     { path: '/axios', name: 'Axios', component: _ => { require(['@/view/doc/Axios.md'], _) } },
     { path: '/webpack', name: 'Webpack', component: _ => { require(['@/view/doc/Webpack.md'], _) } },
     { path: '/useskills', name: 'Useskills', component: _ => { require(['@/view/doc/Useskills.md'], _) } },
+
+    { path: '/vueReaders', name: 'VueReaders', component: _ => { require(['@/view/doc/VueReaders.md'], _) } },
   ]
 })

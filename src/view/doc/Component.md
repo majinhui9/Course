@@ -109,12 +109,15 @@ props: {
 }
 ```
 
-## 组件通讯
+## 组件通信
+
+[Vue 组件间通信六种方式](https://juejin.im/post/5cde0b43f265da03867e78d3 "Vue 组件间通信六种方式 By 掘金")
+<br/>
 
 ### 父组件到子组件
 
-方式：通过子组件props属性来传递数据 props是一个数组
-注意：属性的值必须在组件中通过props属性显示指定，否则，不会生效
+方式：通过子组件props属性来传递数据 props是一个数组<br/>
+注意：属性的值必须在组件中通过props属性显示指定，否则，不会生效<br/>
 说明：传递过来的props属性的用法与data属性的用法相同
 ```html
 <div id="app">
@@ -143,12 +146,12 @@ props: {
 ```
 ### 子组件到父组件
 
-方式：父组件给子组件传递一个函数，由子组件调用这个函数
-说明：借助vue中的自定义事件`（v-on:cunstomFn="fn"）`
+方式：父组件给子组件传递一个函数，由子组件调用这个函数<br/>
+说明：借助vue中的自定义事件`（v-on:cunstomFn="fn"）`<br/>
 步骤:
 
-1、在父组件中定义方法 parentFn
-2、在子组件 组件引入标签 中绑定自定义事件 v-on:自定义事件名="父组件中的方法" ==> `@pfn="parentFn"`
+1、在父组件中定义方法 parentFn<br/>
+2、在子组件 组件引入标签 中绑定自定义事件 v-on:自定义事件名="父组件中的方法" ==> `@pfn="parentFn"`<br/>
 3、子组件中通过`$emit()`触发自定义事件事件 `this.$emit(pfn,参数列表。。。)`
 
 ```html
@@ -178,7 +181,7 @@ props: {
 
 ### 非父子组件通讯
 
-在简单的场景下，可以使用一个空的 Vue 实例作为事件总线
+在简单的场景下，可以使用一个空的 Vue 实例作为事件总线<br/>
 `$on()`：绑定自定义事件
 
 ```js
@@ -240,6 +243,7 @@ bus.$emit('id-selected', 1)
 ### 内容分发
 
 通过 标签指定内容展示区域
+<br/>
 
 案例：
 ```html
@@ -271,8 +275,8 @@ bus.$emit('id-selected', 1)
 
 ### 获取组件（或元素） - refs
 
-说明：`vm.$refs` 一个对象，持有已注册过 ref 的所有子组件（或HTML元素）
-使用：在 HTML元素 中，添加ref属性，然后在JS中通过vm.$refs.属性来获取
+说明：`vm.$refs` 一个对象，持有已注册过 ref 的所有子组件（或HTML元素）<br/>
+使用：在 HTML元素 中，添加ref属性，然后在JS中通过vm.$refs.属性来获取<br/>
 注意：如果获取的是一个子组件，那么通过ref就能获取到子组件中的data和methods
 ```html
 <div id="app">
@@ -296,6 +300,66 @@ bus.$emit('id-selected', 1)
   })
 </script>
 ```
+
+### .sync 修饰符
+在有些情况下，我们可能需要对一个 prop 进行“双向绑定”。不幸的是，真正的双向绑定会带来维护上的问题，因为子组件可以修改父组件，且在父组件和子组件都没有明显的改动来源。这种情况以 `update:myPropName` 的模式触发事件取而代之。
+
+子组件的值发生变化，通过 update 的认识向父组件更新
+```js
+this.$emit('update:title', newTitle)
+```
+
+然后父组件通过 .sync 修饰符 可以监听那个事件并根据需要更新一个本地的数据属性。
+```html
+<text-document :title.sync="doc.title"></text-document>
+```
+
+**注意**
+- 带有 .sync 修饰符的 v-bind 不能和表达式一起使用 (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)。取而代之的是，你只能提供你想要绑定的属性名，类似 v-model。
+- 数据是单向的，子组件发生变化会向父组件更新，父组件变化不会同步到子组件
+
+
+## 插槽
+
+## 混入 - mixin
+
+当多个组件有相同的方法或属性时，可以把这一部分提取出来，然后通过mixin的方式分别混入到各组件，达到复用效果。<br/>
+当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”，混入对象的钩子将在组件自身钩子之前调用，遇到相同的属性或方法，组件内部的会替换混入的部分
+
+```js
+// mixin.js
+export default {
+  data: function () {
+    return {
+      message: 'hello',
+      foo: 'abc'
+    }
+  },
+  methods: {},
+  created() {
+    console.log('mixin')
+  }
+}
+
+// vue 组件
+import mixin from "./mixin.js"
+export default {
+  mixins: [mixin],
+  data: function () {
+    return {
+      message: 'goodbye',
+      bar: 'def'
+    }
+  },
+  created: function () {
+    console.log(this.$data) // 该打印之前会先打印 'mixin'
+    // => { message: "goodbye", foo: "abc", bar: "def" }
+  }
+}
+```
+
+## 渲染函数 - reader
+[reader](/vueReaders)
 
 <template>
   <TitleMenu></TitleMenu>

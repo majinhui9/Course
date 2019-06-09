@@ -75,7 +75,7 @@ Object.defineProperty(obj, 'msg', {
 })
 ```
 
-## Vue双向绑定的极简实现
+### Vue双向绑定的极简实现
 ```html
 <!-- 示例 -->
 <input type="text" id="txt" />
@@ -276,7 +276,7 @@ methods: {
 
 ## 样式处理 -class和style
 
-  使用方式：v-bind:class="expression" or :class="expression"
+  使用方式：v-bind:class="expression" or :class="expression"<br/>
   表达式的类型：字符串、数组、对象
 
 ```html
@@ -305,7 +305,7 @@ methods: {
 
 ## 监视数据变化 - watch
 
-watch是一个对象，键是需要观察的表达式，值是对应回调函数
+watch是一个对象，键是需要观察的表达式，值是对应回调函数<br/>
 当表达式的值发生变化后，会调用对应的回调函数完成响应的监视操作
 
 ```js
@@ -331,7 +331,7 @@ watch是一个对象，键是需要观察的表达式，值是对应回调函数
 
 ## 计算属性 -computed
 
-计算属性是基于它们的依赖进行缓存的，只有在它的依赖发生改变时才会重新求值
+计算属性是基于它们的依赖进行缓存的，只有在它的依赖发生改变时才会重新求值<br/>
 注意：Mustache语法（{{}}）中不要放入太多的逻辑，否则会让模板过重、难以理解和维护, computed中的属性不能与data中的属性同名，否则会报错
 
 
@@ -359,35 +359,7 @@ watch是一个对象，键是需要观察的表达式，值是对应回调函数
 
 
 <template>
-<div>
-  
-  <div id="itemMenu" v-show="showMenu" @mouseleave="showMenu=!showMenu"></div>
-
-  <Icon type="md-menu" @click="showMenu=!showMenu" style="position: fixed; right: 30px; top: 90px; font-size: 30px; cursor: pointer;"></Icon>
-</div>
+  <TitleMenu></TitleMenu>
 </template>
 
-<script>
-export default {
-  data(){
-    return {
-      showMenu: false
-    }
-  },
-  created() {
-    this.$nextTick(() => {
-      let titles = document.querySelectorAll('h1, h2')
-      const itemMenu = document.querySelector('#itemMenu')
-      let html = ''
-      for (let i = 0; i < titles.length; i++) {
-        const tit = titles[i]
-        tit.setAttribute("id", tit.innerText);
-        tit.innerHTML = tit.innerText + '<a href="#" name="'+tit.innerText+'"></a>'
-        html += '<a href="#'+tit.innerText+'">'+tit.innerText+ '</a>'
-      }
-      itemMenu.innerHTML  = html
-    })
-    
-  }
-}
-</script>
+<script></script>

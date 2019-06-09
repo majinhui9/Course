@@ -12,6 +12,11 @@ export default {
   components: {
     myMenu
   },
+  created() {
+    window.onbeforeunload = function() {
+      location.href = '/Course'
+    }
+  },
 }
 </script>
 
@@ -33,7 +38,7 @@ section h1, section h2 {
 
 section blockquote p {
   font-weight: bold;
-  border-left: 3px solid rgb(24,85,124);
+  border-left: 3px solid #2d8cf0;
   padding-left: 10px;
 }
 section img {
