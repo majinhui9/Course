@@ -52,6 +52,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/Course/',
 
+    // docs
+    docsPath: path.resolve(__dirname, '../docs'),
+
     /**
      * Source Maps
      */

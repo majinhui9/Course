@@ -1,4 +1,6 @@
 'use strict'
+// https://github.com/shelljs/shelljs
+require('shelljs/global')
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
@@ -16,6 +18,8 @@ spinner.start()
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
+  // 删除docs文件夹下文件
+  rm(path.join(config.build.docsPath, config.build.assetsSubDirectory), err=> {})
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()
     if (err) throw err
@@ -37,5 +41,9 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'
     ))
+    
+    // 拷贝dist --> docs
+    cp('-R', config.build.assetsRoot + '/*', config.build.docsPath) // eslint-disable-line
+
   })
 })
